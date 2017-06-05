@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>calculator</title>
+      <style type="text/css">
+         /* below code for modal*/
+         .modal{
+         position: fixed;
+         font-family: Impact;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         left: 0;
+         background: rgba(0,0,0,0.8);
+         z-index: 99999;
+         opacity:0;
+         pointer-events: none;
+         }
+         .modal:target {
+         opacity:1;
+         pointer-events: auto;
+         }
+         .modal> div {
+         transition: all .2s ease-in-out; 
+         width: 400px;
+         position: relative;
+         margin: 10% auto;
+         border-radius: 10px;
+         }
+         #Calculator{
+         height:800px;
+         width:800px;
+         }
+         #login{
+         font-size: 50px;
+         color: red;
+         position: absolute;
+         }
+         .outer, #redAlert{
+         position: fixed;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         left: 0;
+         overflow: hidden;
+         z-index: -100;
+         width: 100%;
+         height: 100%;
+         }
+         .video{
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         }
+         input{
+         color: red;
+         font-size: 20px;
+         padding-left: 400px;
+         text-decoration: none;color: rgba(0, 255, 204,.5);
+         background: rgba(0, 153, 122,0);
+         padding: 15px 40px;
+         border-radius: 4px;
+         font-weight: normal;
+         transition: all 0.2s ease-in-out;
+         }
+         #login{
+         padding-top: 280px;
+         padding-left: 750px;
+         font-family: bule;
+         text-decoration: none;
+         color: rgba(0, 255, 204,.5);
+         background: rgba(0, 153, 122,0);
+         font-weight: bold;
+         font-size: 90px;
+         text-transform: uppercase;
+         transition: all 0.2s ease-in-out;
+         }
+         #login:hover, input:hover{
+         color: rgb(128, 255, 159);
+         text-shadow: 0 5px 15px rgb(26, 117, 255);
+         }
+         @font-face {
+         font-family: bule;
+         src: url(bule.ttf);
+         }
+      </style>
+   </head>
+   <body  onload="clear()" >
+     <img  id="redAlert" src="#"  height="42" width="42">
+      <div class="outer">
+         <video  id= "video1" width="320" height="240"    loop  autoplay   class="video">
+            <source src="frontmute.mp4" type="video/mp4">
+         </video>
+      </div>
+      <a   href="#openModal" id = "login"  color: black; padding-left:50px; onclick="mute(true);" display="block"> Calculator</a>
+      <audio  id="audio1" autoplay>
+         <source src="beep.mp4" type="audio/mp4">
+         Your browser does not support the audio element.
+      </audio>
+      <div id="openModal" class="modal">
+         <div id="Calculator" style="display: none;" >
+            <FORM NAME="Calc" colspan="5">
+               <TABLE >
+                  <TR>
+                     <TD>
+                        <INPUT  TYPE="text"  NAME="Input" >       <!-- displays-->
+                  <TR>
+                     <TD>
+                        <!--"NAME" used similar to "ID"/"Class" to pull data from INPUT-->
+                        <INPUT class="button" TYPE="button" NAME="average"  VALUE="  Avg " OnClick="fetchAvg()">
+                        <INPUT class="button" TYPE="button" NAME="null"  VALUE="  C  " OnClick="Calc.Input.value= null">
+                        <INPUT class="button" TYPE="button" NAME="+/-"  VALUE="  +/-  " OnClick="x()">
+                        <INPUT class="button" TYPE="button" NAME="percent"   VALUE="  %  " OnClick="fetchPercent()"> 
+                        <INPUT class="button" TYPE="button" NAME="division"   VALUE="  /  " OnClick="Calc.Input.value += '/'"> 
+                        <br>
+                        <INPUT class="button" TYPE="button" NAME="seven"   VALUE="  7  " OnClick="Calc.Input.value += '7'"> 
+                        <INPUT class="button" TYPE="button" NAME="eight"   VALUE="  8  " OnClick="Calc.Input.value += '8'"> 
+                        <INPUT class="button" TYPE="button" NAME="nine"   VALUE="  9  " OnClick="Calc.Input.value += '9'"> 
+                        <INPUT class="button" TYPE="button" NAME="mult"  VALUE="  x  " OnClick="Calc.Input.value += '*'">
+                        <br>
+                        <INPUT class="button" TYPE="button" NAME="four"   VALUE="  4  " OnClick="Calc.Input.value += '4'"> 
+                        <INPUT class="button" TYPE="button" NAME="five"   VALUE="  5  " OnClick="Calc.Input.value += '5'"> 
+                        <INPUT class="button" TYPE="button" NAME="six"   VALUE="  6  " OnClick="Calc.Input.value += '6'"> 
+                        <INPUT class="button" TYPE="button" NAME="plus"  VALUE="  -  " OnClick="Calc.Input.value += '-'">
+                        <br>
+                        <INPUT  class="button" TYPE="button" NAME="one"   VALUE="  1  " OnClick="Calc.Input.value += '1'"> 
+                        <INPUT class="button" TYPE="button" NAME="two"   VALUE="  2  " OnCLick="Calc.Input.value += '2'">
+                        <INPUT class="button" TYPE="button" NAME="three"   VALUE=" 3" OnCLick="Calc.Input.value += '3'">
+                        <INPUT class="button" TYPE="button" NAME="plus"  VALUE="  +  " OnClick="Calc.Input.value += '+'">
+                        <br>
+                        <INPUT class="button" TYPE="button" NAME="zero"  VALUE="  0  " OnClick="Calc.Input.value += '0'">
+                        <INPUT class="button" TYPE="button" NAME="dot"  VALUE="  .  " OnClick="Calc.Input.value += '.'">
+                        <INPUT class="button" TYPE="button" NAME="DoIt"  VALUE="  =  " OnClick="Calc.Input.value = eval(Calc.Input.value)">
+                     </TD>
+                  </TR>
+               </TABLE>
+            </FORM>
+            <div id="close" >
+               <a href="#close" >
+               <input type="Button" value="Log Out" onclick="reset();">
+               </a>
+            </div>
+         </div>
+         <div id="firewall" style="display: block;">
+            <form nam="lock">
+               <tr>
+                  <td>
+                     <input type="text" id="PW" name="password" style="background: transparent">
+                     <input type="button" value="Enter"
+                        onclick="verify();" 
+                        >
+                     <a href="#close">
+                     <input type="Button" Value="Exit" onclick="reset2();">
+                     </a>					
+                  </td>
+               </tr>
+            </form>
+            <audio  id="denied" autoplay>
+               <source src="#" type="audio/wav">
+               Your browser does not support the audio element.
+            </audio>
+            <audio  id="denied2" loop autoplay>
+               <source src="#" type="audio/mp4">
+               Your browser does not support the audio element.
+            </audio>
+            <audio  id="granted" autoplay>
+               <source src="#" type="audio/wav">
+               Your browser does not support the audio element.
+            </audio>
+         </div>
+      </div>
+      <script type="text/javascript">
+         var pin=0, attempts=0;
+         function fetchPin(){
+         	pin=Number(document.getElementById('PW').value);
+         }
+         function verify(){
+         	fetchPin();
+         	if (pin=="2626"){
+         		attempts=0;
+         		//alert("Access Granted");
+                    document.getElementById('Calculator').style.display='block';
+                    document.getElementById('firewall').style.display='none';
+                    document.getElementById('granted').src='acessGranted.wav';      	
+         	}
+         	else if  (pin!=="2626" && pin!==null && pin!==0){
+         		attempts++;
+         		//alert(attempts);
+         		document.getElementById('denied').src='computer_access.wav';
+         		if (attempts ==3){
+         			setTimeout(function(){
+						document.getElementById('openModal').style.display='none';
+						document.getElementById('login').style.display='none';  
+      					}, 400);
+					document.getElementById('video1').src='#'; 	
+					document.getElementById('redAlert').src='redAlert.gif'; 
+         			setTimeout(function(){ document.getElementById('denied2').src='denied.mp4'; }, 700);	
+         		}
+                    
+         	}
+         	pin=null;
+         }
+         
+         function reset(){
+         	mute(false);
+                    document.getElementById('login').style.display='block';
+                    document.getElementById('Calculator').style.display='none';
+                    document.getElementById('firewall').style.display='block';	
+                    document.getElementById('PW').value=null;    
+                    Calc.Input.value= null;        
+         }
+         
+         function reset2(){
+         	 mute(false);
+                 document.getElementById('login').style.display='block';
+                 document.getElementById('PW').value=null;
+         }
+         
+         /*function clear(){
+         	attempts=0; 
+//document.getElementById('login').style.display='none';
+         	//document.getElementById('login').style.display='none';    
+         }*/
+
+          
+         function  fetchAvg(){
+         	var str, arr=0, sum=0; 
+         	str =Calc.Input.value; 
+         	arr=str.split("+");
+             for (var i=0; i<arr.length; i++){
+             	sum=sum+Number(arr[i]);
+             }
+         
+             Calc.Input.value =sum/arr.length; 
+         }
+
+         function  fetchPercent(){
+         	var tempNum= Number(Calc.Input.value);
+             Calc.Input.value =tempNum/100; 
+         }
+
+         /*
+         function  x(){
+         	var tempNum= Calc.Input.value, signNum;
+            if (tempNum[0]!=="-"){
+            	Calc.Input.value="-"+tempNum; 
+            }
+
+            if (tempNum[0]=="-"){
+				Calc.Input.value="-"+
+
+				tempNum.slice(0, 5);tempNum; 
+
+            }*/
+
+         
+         function mute(bool){
+         var vid = document.getElementById("audio1");
+         vid.muted = bool;
+         document.getElementById('login').style.display='none';
+         }
+         
+         
+      </script>
+   </body>
+</html>
